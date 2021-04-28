@@ -1,6 +1,7 @@
 ﻿using DevOps_Awarness.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace DevOps_Awarness.Controllers
 {
@@ -18,13 +19,22 @@ namespace DevOps_Awarness.Controllers
 
         [HttpGet("message")]
         [ProducesResponseType(200)]
-        public IActionResult Get()
+        [ProducesResponseType(500)]
+        public IActionResult GetMessage()
         {
-            var response = new DevOpsResponse("This is an old message");
+            try
+            {
+                var response = new DevOpsResponse("This is an old message");
 
-            _logger.LogInformation($"Message '{response.Message}' has been sent");
+                return Ok(response.Message);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
 
-            return Ok(response.Message);
+                return StatusCode(500);
+            }
+            
         }
     }
 }
