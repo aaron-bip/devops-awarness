@@ -15,11 +15,3 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'cellrecordings-subscription-plan-dev(c96ec7f8-ad5d-4d0b-a67b-539e60a5d70d)'
-    appType: 'webAppLinux'
-    WebAppName: 'awareness-test-api'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'DOTNETCORE|3.1'
